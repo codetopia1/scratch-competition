@@ -150,16 +150,13 @@
       .judge-row { grid-template-columns:auto 1fr auto; }
       .judge-icon { width:38px; height:38px; }
       .event-card { grid-template-columns:1fr; }
-      .rules-steps { grid-template-columns:1fr; }
-      .prize-items { grid-template-columns:1fr; }
-      .rules-text p { font-size:14px; }
     }
     /* ---- توضیحات مسابقه ---- */
     .rules-text { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
     .rules-icon { flex:0 0 48px; height:48px; display:grid; place-items:center; border-radius:16px; background:#fff3c9; font-size:24px; }
     .rules-text p { margin:0; font-size:15px; line-height:2.1; font-weight:600; }
     .rules-steps { display:grid; grid-template-columns:repeat(3,1fr); gap:11px; }
-    .rules-step { display:flex; align-items:center; gap:11px; padding:13px; border-radius:17px; background:var(--st); }
+    .rules-step { position:relative; display:flex; align-items:center; gap:11px; padding:13px; border-radius:17px; background:var(--st); }
     .rules-step b { flex:0 0 32px; height:32px; display:grid; place-items:center; border-radius:50%; background:#fff; border:2px solid var(--st-line); font-size:15px; font-weight:900; }
     .rules-step span { font-size:13px; font-weight:700; line-height:1.8; }
     /* ---- جوایز ---- */
@@ -198,6 +195,35 @@
       .people { grid-template-columns:1fr; }
       .league-heading h3 { font-size:17px; }
       .toolbar { gap:7px; }
+    }
+    /* ---- موبایل: توضیحات مسابقه و جوایز (بعد از همه‌ی استایل‌های پایه) ---- */
+    @media (max-width: 600px) {
+      .rules-card { padding:18px 14px; }
+      .rules-text { flex-direction:column; text-align:center; gap:10px; margin-bottom:16px; }
+      .rules-icon { flex-basis:auto; width:54px; height:54px; font-size:27px; }
+      .rules-text p { font-size:14px; line-height:2.1; }
+      .rules-steps { grid-template-columns:1fr; gap:12px; }
+      .rules-step { padding:12px 14px; gap:13px; }
+      .rules-step b { flex-basis:34px; height:34px; }
+      .rules-step span { font-size:14px; }
+      .rules-step:not(:last-child)::after {
+        content:""; position:absolute; right:30px; top:100%; width:3px; height:12px; background:var(--st-line); opacity:.55;
+      }
+      .prize-card { padding:22px 12px 18px; border-radius:22px; }
+      .prize-card::before { top:8px; left:10px; font-size:20px; }
+      .prize-card::after { bottom:8px; right:10px; font-size:18px; }
+      .prize-ribbon { margin-bottom:14px; padding:8px 18px; font-size:14px; }
+      .prize-items { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+      .prize-item { flex-direction:column; text-align:center; gap:10px; padding:16px 8px; }
+      .prize-icon { flex-basis:auto; width:56px; height:56px; font-size:30px; }
+      .prize-item strong { font-size:14px; line-height:1.7; }
+      .prize-item span { font-size:11px; line-height:1.7; }
+      .prize-leagues { gap:6px; margin-top:14px; }
+      .prize-leagues span { padding:6px 10px; font-size:12px; }
+      .prize-note { font-size:12.5px; }
+    }
+    @media (max-width: 340px) {
+      .prize-items { grid-template-columns:1fr; }
     }
     @media (prefers-reduced-motion: reduce) { * { transition:none !important; } }
   </style>
