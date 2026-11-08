@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6c5ce7">
+  <title>مسابقات اسکرچ | آکادمی روبوتا</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #26304a;
+      --muted: #68738d;
+      --purple: #7057e8;
+      --pink: #ff6fae;
+      --yellow: #ffd45c;
+      --blue: #58c7f3;
+      --green: #62d6a5;
+      --paper: #fffdf8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Vazirmatn", Vazir, Tahoma, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 8% 8%, #ffe5f1 0 110px, transparent 112px),
+        radial-gradient(circle at 92% 24%, #dff6ff 0 130px, transparent 132px),
+        linear-gradient(180deg, #fff8e8 0%, #f3efff 55%, #effaff 100%);
+      min-height: 100vh;
+    }
+    .page { width: min(100% - 28px, 980px); margin: 0 auto; padding: 22px 0 44px; }
+    .hero {
+      position: relative; overflow: hidden; isolation: isolate;
+      padding: clamp(22px, 5vw, 42px);
+      border: 4px solid white; border-radius: 32px;
+      color: white; text-align: center;
+      background: linear-gradient(125deg, #6854e8 0%, #8b67ec 48%, #ff78ae 100%);
+      box-shadow: 0 14px 0 #d9d0ff, 0 22px 40px #5944a522;
+    }
+    .hero::before, .hero::after {
+      content: ""; position: absolute; z-index: -1; border-radius: 50%;
+      background: #ffffff20;
+    }
+    .hero::before { width: 210px; height: 210px; top: -105px; right: -45px; }
+    .hero::after { width: 160px; height: 160px; bottom: -95px; left: -35px; }
+    .brand {
+      display: inline-flex; align-items: center; gap: 9px;
+      padding: 8px 14px; border: 1px solid #ffffff65;
+      border-radius: 999px; background: #ffffff20; font-weight: 800;
+      font-size: 14px;
+    }
+    .brand-mark { display:grid; place-items:center; width:28px; height:28px; border-radius:9px; background:var(--yellow); color:#6249c9; }
+    h1 { margin: 18px 0 9px; font-size: clamp(27px, 6vw, 46px); line-height: 1.45; }
+    .hero p { margin: 0 auto; max-width: 570px; color: #fff8ff; line-height: 2; font-size: clamp(14px, 2.5vw, 17px); }
+    .hero-stickers { margin-top: 17px; font-size: clamp(25px, 6vw, 38px); letter-spacing: 10px; }
+    .stats {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 13px;
+      margin: 28px 0;
+    }
+    .stat {
+      padding: 17px 12px; text-align: center; background: white;
+      border: 3px solid #fff; border-radius: 22px;
+      box-shadow: 0 6px 0 #e8e2fb, 0 12px 22px #493b7d0c;
+    }
+    .stat:nth-child(1) { transform: rotate(-1deg); }
+    .stat:nth-child(2) { transform: translateY(-5px); }
+    .stat:nth-child(3) { transform: rotate(1deg); }
+    .stat-number { display:block; font-size: clamp(25px, 5vw, 34px); font-weight:900; color:var(--purple); }
+    .stat-label { display:block; margin-top:5px; color:var(--muted); font-size:13px; }
+    .section-title { display:flex; align-items:center; gap:10px; margin: 30px 2px 15px; font-size:21px; font-weight:900; }
+    .section-title::before { content:""; width:9px; height:28px; border-radius:10px; background:var(--yellow); }
+    .toolbar { display:flex; gap:10px; align-items:center; margin-bottom:14px; }
+    .search-wrap { position:relative; flex:1; }
+    .search-wrap span { position:absolute; right:14px; top:50%; transform:translateY(-50%); font-size:18px; }
+    input {
+      width:100%; border:2px solid #e8e2fb; border-radius:16px; background:#fff;
+      padding:14px 44px 14px 14px; font:inherit; color:var(--ink); outline:none;
+    }
+    input:focus { border-color:var(--purple); box-shadow:0 0 0 4px #7057e81a; }
+    .tabs { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:17px; }
+    .tab {
+      border:0; border-radius:17px; padding:13px 9px; font:inherit; font-weight:800;
+      color:var(--ink); cursor:pointer; background:white; box-shadow:0 4px 0 #e6e0f5;
+      transition:transform .15s, box-shadow .15s;
+    }
+    .tab:active { transform:translateY(3px); box-shadow:0 1px 0 #e6e0f5; }
+    .tab[aria-selected="true"] { color:white; background:var(--tab-color); box-shadow:0 4px 0 var(--tab-shadow); }
+    .tab small { display:block; margin-top:5px; font-size:11px; font-weight:500; opacity:.85; }
+    .league-panel {
+      background:#ffffffd9; border:3px solid white; border-radius:25px;
+      padding:clamp(15px, 3vw, 23px); box-shadow:0 10px 28px #55448b12;
+    }
+    .league-heading { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:17px; }
+    .league-heading h3 { margin:0; font-size:20px; }
+    .game-name { color:var(--muted); font-size:13px; margin-top:6px; }
+    .count-pill { white-space:nowrap; padding:8px 12px; border-radius:999px; background:#fff3c9; color:#795600; font-size:12px; font-weight:800; }
+    .people { display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:11px; }
+    .person {
+      display:flex; align-items:center; gap:11px; min-width:0;
+      padding:12px; border:2px solid #f0edfa; border-radius:17px; background:white;
+    }
+    .avatar {
+      flex:0 0 39px; height:39px; display:grid; place-items:center;
+      border-radius:14px; background:var(--avatar-bg); font-size:20px;
+    }
+    .person-name { font-weight:800; font-size:14px; overflow-wrap:anywhere; }
+    .person-number { display:block; margin-top:4px; color:#9299aa; font-size:11px; }
+    .empty { grid-column:1/-1; text-align:center; padding:30px 10px; color:var(--muted); }
+    .footer { text-align:center; margin-top:25px; color:var(--muted); font-size:12px; line-height:2; }
+    .footer strong { color:var(--purple); }
+    /* ---- فرم داوری ---- */
+    .judge-panel { margin-top:0; }
+    .judge-group { margin-bottom:14px; padding:12px; border:2px dashed #e3dcfa; border-radius:20px; background:#faf8ff; }
+    .judge-group-head { display:flex; align-items:center; justify-content:space-between; margin:0 4px 10px; font-weight:800; font-size:14px; color:var(--purple); }
+    .judge-group-head span { padding:4px 10px; border-radius:999px; background:#ece7ff; font-size:12px; }
+    .judge-row {
+      display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px;
+      padding:12px; margin-bottom:10px; background:#fff; border:2px solid #f0edfa; border-radius:17px;
+    }
+    .judge-group .judge-row:last-child { margin-bottom:0; }
+    .judge-panel > .judge-row { margin-bottom:14px; }
+    .judge-icon { width:42px; height:42px; display:grid; place-items:center; border-radius:14px; font-size:21px; background:var(--ic); }
+    .judge-title { font-weight:800; font-size:14px; line-height:1.8; }
+    .total-card {
+      display:flex; align-items:center; justify-content:space-between; gap:16px; padding:16px 20px; margin-top:4px;
+      color:#fff; border-radius:20px; background:linear-gradient(125deg,#6854e8,#8b67ec 55%,#ff78ae);
+      box-shadow:0 6px 0 #d9d0ff;
+    }
+    .total-label { font-weight:900; font-size:16px; }
+    .total-score { font-weight:900; font-size:28px; white-space:nowrap; }
+    .judge-intro { display:flex; gap:14px; align-items:flex-start; margin-bottom:16px; padding:15px 16px; border-radius:20px; background:linear-gradient(135deg,#fff3c9,#ffe4ef); border:2px solid #fff; }
+    .judge-intro-icon { flex:0 0 46px; height:46px; display:grid; place-items:center; border-radius:15px; background:#fff; font-size:23px; }
+    .judge-intro strong { display:block; font-size:16px; color:#5a3fc8; }
+    .judge-intro p { margin:5px 0 0; font-size:13px; line-height:2; color:#5a5470; }
+    .points { min-width:64px; padding:7px 8px; text-align:center; border-radius:15px; background:var(--ic); border:2px solid var(--bar); line-height:1.3; }
+    .points b { display:block; font-size:21px; font-weight:900; color:var(--ink); }
+    .points span { display:block; font-size:11px; color:var(--muted); }
+    .total-score small { font-size:13px; font-weight:700; opacity:.9; }
+    .event-card {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:26px; padding:18px;
+      border:3px solid #fff; border-radius:25px; background:#ffffffd9; box-shadow:0 10px 28px #55448b12;
+    }
+    .event-item { display:flex; align-items:center; gap:11px; padding:12px; border-radius:17px; background:var(--ev-bg); min-width:0; }
+    .event-icon { flex:0 0 44px; height:44px; display:grid; place-items:center; border-radius:14px; background:#fff; font-size:22px; }
+    .event-label { display:block; font-size:11px; color:var(--muted); }
+    .event-value { display:block; margin-top:3px; font-weight:900; font-size:14px; line-height:1.7; }
+    @media (max-width: 600px) {
+      .judge-row { grid-template-columns:auto 1fr auto; }
+      .judge-icon { width:38px; height:38px; }
+      .event-card { grid-template-columns:1fr; }
+      .rules-steps { grid-template-columns:1fr; }
+      .prize-items { grid-template-columns:1fr; }
+      .rules-text p { font-size:14px; }
+    }
+    /* ---- توضیحات مسابقه ---- */
+    .rules-text { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+    .rules-icon { flex:0 0 48px; height:48px; display:grid; place-items:center; border-radius:16px; background:#fff3c9; font-size:24px; }
+    .rules-text p { margin:0; font-size:15px; line-height:2.1; font-weight:600; }
+    .rules-steps { display:grid; grid-template-columns:repeat(3,1fr); gap:11px; }
+    .rules-step { display:flex; align-items:center; gap:11px; padding:13px; border-radius:17px; background:var(--st); }
+    .rules-step b { flex:0 0 32px; height:32px; display:grid; place-items:center; border-radius:50%; background:#fff; border:2px solid var(--st-line); font-size:15px; font-weight:900; }
+    .rules-step span { font-size:13px; font-weight:700; line-height:1.8; }
+    /* ---- جوایز ---- */
+    .prize-card {
+      position:relative; overflow:hidden; isolation:isolate; margin-top:26px; padding:26px clamp(15px,3vw,24px) 20px;
+      text-align:center; border:3px solid #fff; border-radius:25px;
+      background:linear-gradient(160deg,#fff6d6 0%,#ffe9f2 100%); box-shadow:0 8px 0 #f6e3a6, 0 14px 28px #a9822a14;
+    }
+    .prize-card::before { content:"✨"; position:absolute; z-index:-1; top:12px; left:18px; font-size:26px; opacity:.7; }
+    .prize-card::after { content:"⭐"; position:absolute; z-index:-1; bottom:10px; right:18px; font-size:24px; opacity:.55; }
+    .prize-ribbon {
+      display:inline-block; margin-bottom:18px; padding:9px 22px; border-radius:999px;
+      background:linear-gradient(120deg,#ffb73d,#ff8a4c); color:#fff; font-weight:900; font-size:15px; box-shadow:0 4px 0 #d9722e;
+    }
+    .prize-items { display:grid; grid-template-columns:repeat(2,1fr); gap:13px; }
+    .prize-item {
+      display:flex; align-items:center; gap:14px; padding:16px; text-align:right;
+      background:#fff; border:2px solid #fff0c2; border-radius:20px; box-shadow:0 4px 0 #f3e2ad;
+    }
+    .prize-icon { flex:0 0 58px; height:58px; display:grid; place-items:center; border-radius:18px; background:#fff3c9; font-size:32px; }
+    .prize-item strong { display:block; font-size:16px; font-weight:900; color:#5a3fc8; }
+    .prize-item span { display:block; margin-top:4px; font-size:12px; color:var(--muted); }
+    .prize-leagues { display:flex; flex-wrap:wrap; justify-content:center; gap:9px; margin-top:16px; }
+    .prize-leagues span { padding:7px 14px; border-radius:999px; background:#ffffffb8; border:2px solid #fff; font-size:13px; font-weight:800; }
+    .prize-note { margin:14px 0 0; font-size:13px; line-height:2; color:#6f6358; }
+    @media (max-width: 600px) {
+      .page { width:min(100% - 20px, 520px); padding-top:12px; }
+      .hero { border-radius:24px; padding:24px 16px; box-shadow:0 8px 0 #d9d0ff, 0 16px 28px #5944a522; }
+      .stats { gap:8px; margin:22px 0; }
+      .stat { padding:13px 5px; border-radius:17px; box-shadow:0 4px 0 #e8e2fb; }
+      .stat-label { font-size:11px; }
+      .section-title { font-size:18px; }
+      .tabs { gap:7px; }
+      .tab { padding:11px 5px; border-radius:14px; font-size:13px; }
+      .tab small { font-size:10px; }
+      .people { grid-template-columns:1fr; }
+      .league-heading h3 { font-size:17px; }
+      .toolbar { gap:7px; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { transition:none !important; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div class="brand"><span class="brand-mark">★</span> آکادمی روباتیک و برنامه نویسی روبوتا</div>
+      <h1>قهرمان بعدی تویی؟ 🏆</h1>
+      <p>به مسابقات برنامه‌نویسی اسکرچ خوش اومدی!<br>اینجا می‌تونی رقبای خودت رو در هر لیگ پیدا کنی.</p>
+      <div class="hero-stickers" aria-hidden="true">🎮 🚀 🧩</div>
+    </header>
+
+    <section class="stats" aria-label="آمار شرکت‌کنندگان">
+      <div class="stat"><span class="stat-number" id="count1">۳</span><span class="stat-label">شرکت‌کننده لیگ اول</span></div>
+      <div class="stat"><span class="stat-number" id="count2">۳</span><span class="stat-label">شرکت‌کننده لیگ دوم</span></div>
+      <div class="stat"><span class="stat-number" id="count3">۳</span><span class="stat-label">شرکت‌کننده لیگ سوم</span></div>
+    </section>
+
+    <h2 class="section-title">لیست قهرمان‌های هر لیگ</h2>
+    <div class="toolbar">
+      <label class="search-wrap">
+        <span aria-hidden="true">🔎</span>
+        <input id="search" type="search" placeholder="اسم شرکت‌کننده رو جست‌وجو کن..." aria-label="جست‌وجوی شرکت‌کننده">
+      </label>
+    </div>
+    <nav class="tabs" aria-label="انتخاب لیگ">
+      <button class="tab" style="--tab-color:#5c9df5;--tab-shadow:#3978ce" aria-selected="true" data-league="0">🧩 لیگ اول</button>
+      <button class="tab" style="--tab-color:#ff9b55;--tab-shadow:#df7430" aria-selected="false" data-league="1">🚀 لیگ دوم</button>
+      <button class="tab" style="--tab-color:#a17af2;--tab-shadow:#7955c9" aria-selected="false" data-league="2">⭐ لیگ سوم</button>
+    </nav>
+
+    <section class="league-panel" aria-live="polite">
+      <div class="league-heading">
+        <div>
+          <h3 id="leagueTitle">🧩 شرکت‌کنندگان لیگ اول</h3>
+          </div>
+        <span class="count-pill" id="visibleCount">۳ نفر</span>
+      </div>
+      <div class="people" id="people"></div>
+    </section>
+
+    <h2 class="section-title">توضیحات مسابقه</h2>
+    <section class="league-panel rules-card" aria-label="توضیحات مسابقه">
+      <div class="rules-text">
+        <div class="rules-icon" aria-hidden="true">🎯</div>
+        <p>در هر لیگ، یک پروژه‌ی مشخص به شرکت‌کننده‌ها سپرده می‌شود. هر نفر باید در بازه‌ی زمانی تعیین‌شده، آن پروژه را با اسکرچ بسازد و تحویل بدهد.</p>
+      </div>
+      <div class="rules-steps">
+        <div class="rules-step" style="--st:#dff5ff;--st-line:#58c7f3"><b>۱</b><span>پروژه‌ی لیگ خودت را دریافت می‌کنی</span></div>
+        <div class="rules-step" style="--st:#fff0c2;--st-line:#ffd45c"><b>۲</b><span>در بازه‌ی زمانی مقرر آن را می‌سازی</span></div>
+        <div class="rules-step" style="--st:#ffe4ef;--st-line:#ff6fae"><b>۳</b><span>پروژه‌ات با فرم داوری ارزیابی می‌شود</span></div>
+      </div>
+    </section>
+
+    <h2 class="section-title">فرم داوری</h2>
+    <section class="league-panel judge-panel" id="judgeForm" aria-label="فرم داوری">
+      <div class="judge-intro">
+        <div class="judge-intro-icon" aria-hidden="true">📋</div>
+        <div>
+          <strong>پروژه‌ی تو با این فرم داوری می‌شود!</strong>
+          <p>داوران در روز مسابقه، پروژه‌ی اسکرچ همه‌ی شرکت‌کننده‌ها را بر اساس معیارهای زیر و از مجموع ۱۰۰ امتیاز ارزیابی می‌کنند. پیش از تحویل، پروژه‌ات را با این معیارها بسنج.</p>
+        </div>
+      </div>
+
+      <div class="judge-row" style="--ic:#ffe4ef;--bar:#ff6fae">
+        <div class="judge-icon" aria-hidden="true">🐞</div>
+        <div><div class="judge-title">اجرای بدون باگ پروژه</div></div>
+        <div class="points"><b>۵۰</b><span>امتیاز</span></div>
+      </div>
+
+      <div class="judge-group">
+        <div class="judge-group-head">🎨 طراحی <span>۲۰ امتیاز</span></div>
+        <div class="judge-row" style="--ic:#fff0c2;--bar:#ffd45c">
+          <div class="judge-icon" aria-hidden="true">👾</div>
+          <div><div class="judge-title">انتخاب یا طراحی اسپرایت</div></div>
+          <div class="points"><b>۱۰</b><span>امتیاز</span></div>
+        </div>
+        <div class="judge-row" style="--ic:#dff5ff;--bar:#58c7f3">
+          <div class="judge-icon" aria-hidden="true">🌄</div>
+          <div><div class="judge-title">انتخاب یا طراحی پس‌زمینه</div></div>
+          <div class="points"><b>۱۰</b><span>امتیاز</span></div>
+        </div>
+      </div>
+
+      <div class="judge-row" style="--ic:#e8e2ff;--bar:#a17af2">
+        <div class="judge-icon" aria-hidden="true">🔊</div>
+        <div><div class="judge-title">استفاده از افکت‌های صوتی مناسب در اسپرایت‌ها و پس‌زمینه</div></div>
+        <div class="points"><b>۲۰</b><span>امتیاز</span></div>
+      </div>
+
+      <div class="judge-row" style="--ic:#ddf8e9;--bar:#62d6a5">
+        <div class="judge-icon" aria-hidden="true">💡</div>
+        <div><div class="judge-title">خلاقیت و نوآوری</div></div>
+        <div class="points"><b>۱۰</b><span>امتیاز</span></div>
+      </div>
+
+      <div class="total-card">
+        <span class="total-label">🏆 مجموع امتیاز پروژه</span>
+        <span class="total-score">۱۰۰ <small>امتیاز</small></span>
+      </div>
+    </section>
+
+    <h2 class="section-title">جوایز</h2>
+    <section class="prize-card" aria-label="جوایز مسابقه">
+      <div class="prize-ribbon">🥇 نفر اول هر لیگ</div>
+      <div class="prize-items">
+        <div class="prize-item">
+          <div class="prize-icon" aria-hidden="true">🏆</div>
+          <div><strong>تندیس پروژه برتر</strong><span>مخصوص بهترین پروژه‌ی لیگ</span></div>
+        </div>
+        <div class="prize-item">
+          <div class="prize-icon" aria-hidden="true">📜</div>
+          <div><strong>سرتیفیکیت</strong><span>گواهی رسمی قهرمانی</span></div>
+        </div>
+      </div>
+      <div class="prize-leagues">
+        <span>🧩 لیگ اول</span><span>🚀 لیگ دوم</span><span>⭐ لیگ سوم</span>
+      </div>
+      <p class="prize-note">در هر سه لیگ، برنده‌ی اول این جوایز را دریافت می‌کند. شاید قهرمان بعدی تو باشی! ✨</p>
+    </section>
+
+    <section class="event-card" aria-label="زمان و مکان برگزاری">
+      <div class="event-item" style="--ev-bg:#ffe4ef">
+        <div class="event-icon" aria-hidden="true">📍</div>
+        <div><span class="event-label">مکان</span><span class="event-value">پارک علم و فناوری گرگان</span></div>
+      </div>
+      <div class="event-item" style="--ev-bg:#fff0c2">
+        <div class="event-icon" aria-hidden="true">📅</div>
+        <div><span class="event-label">تاریخ</span><span class="event-value">پنجشنبه ۲۱ آبان ماه</span></div>
+      </div>
+      <div class="event-item" style="--ev-bg:#dff5ff">
+        <div class="event-icon" aria-hidden="true">⏰</div>
+        <div><span class="event-label">ساعت</span><span class="event-value">۱۰ صبح</span></div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      با آرزوی موفقیت برای همه شرکت‌کننده‌ها 💛<br>
+      ساخته‌شده توسط مربی <strong>Mahdi Malekan</strong>
+    </footer>
+  </main>
+
+  <script>
+    const leagues = [
+      { title: "🧩 شرکت‌کنندگان لیگ اول", names: ["ارمیا نابئی", "کیاوش روح پرور", "دایان کتولی نژاد", "آیرین استگلدی", "امیرعلی میر", "هدیه خلیلی", "دنیز فرج اللهی", "آدرین رخشانی", "نیهاد نودهی"] },
+      { title: "🚀 شرکت‌کنندگان لیگ دوم", names: ["کارن مقدسی", "امیررضا داداشی", "محمد آرتا بلقی", "علیرضا مومنان", "پارسا کنعانی", "هومان مهرگان فر", "ایلیاد ایری", "آرشان جمال لیوانی", "بهراد قدیدیان", "محمدحسین حاتمی", "الناز بوژمهرانی", "آرینا شهراینی", "احسان کیانی", "دایانا خواجه", "ماهک مختاریان", "یاسمین رخشانی", "هیلدا نیازی فر", "آوینا جعفری", "عارف زارعی", "تارا عباسی", "علی مهقانی", "هلیا منتظری", "پارمیس فراهانی"] },
+      { title: "⭐ شرکت‌کنندگان لیگ سوم", names: ["کارن حسن زاده", "ماهان قشلاقی", "مرصاد مهدوی", "کیاشا دهرویه", "صدرا پور نجفی", "سورنا رحیمی", "کوروش شهسوار", "کارن شهسوار", "کارن خوشنویس", "محمد امین ترکمان غلامی"] }
+    ];
+    const colors = ["#fff0c2", "#dff5ff", "#ffe4ef", "#e8e2ff", "#ddf8e9"];
+    let activeLeague = 0;
+    const persian = n => n.toLocaleString("fa-IR");
+
+    function render() {
+      const league = leagues[activeLeague];
+      const query = document.getElementById("search").value.trim().toLocaleLowerCase("fa");
+      const filtered = league.names.filter(name => name.toLocaleLowerCase("fa").includes(query));
+      document.getElementById("leagueTitle").textContent = league.title;
+        document.getElementById("visibleCount").textContent = `${persian(filtered.length)} نفر`;
+      document.getElementById("people").innerHTML = filtered.length
+        ? filtered.map((name, i) => `
+          <article class="person">
+            <div class="avatar" style="--avatar-bg:${colors[i % colors.length]}">👾</div>
+            <div><div class="person-name">${escapeHTML(name)}</div><span class="person-number">شرکت‌کننده ${persian(i + 1)}</span></div>
+          </article>`).join("")
+        : '<div class="empty">😕 کسی با این اسم پیدا نشد. دوباره جست‌وجو کن!</div>';
+    }
+    function escapeHTML(value) {
+      return value.replace(/[&<>"']/g, char => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[char]));
+    }
+    document.querySelectorAll(".tab").forEach(button => {
+      button.addEventListener("click", () => {
+        activeLeague = Number(button.dataset.league);
+        document.querySelectorAll(".tab").forEach(tab => tab.setAttribute("aria-selected", String(tab === button)));
+        document.getElementById("search").value = "";
+        render();
+      });
+    });
+    document.getElementById("search").addEventListener("input", render);
+    leagues.forEach((league, i) => document.getElementById(`count${i+1}`).textContent = persian(league.names.length));
+    render();
+  </script>
+</body>
+</html>
